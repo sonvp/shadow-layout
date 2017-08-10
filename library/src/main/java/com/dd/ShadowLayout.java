@@ -2,11 +2,17 @@ package com.dd;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
+
 import com.dd.shadow.layout.R;
 
 public class ShadowLayout extends FrameLayout {
@@ -117,7 +123,7 @@ public class ShadowLayout extends FrameLayout {
     private Bitmap createShadowBitmap(int shadowWidth, int shadowHeight, float cornerRadius, float shadowRadius,
                                       float dx, float dy, int shadowColor, int fillColor) {
 
-        Bitmap output = Bitmap.createBitmap(shadowWidth, shadowHeight, Bitmap.Config.ALPHA_8);
+        Bitmap output = Bitmap.createBitmap(shadowWidth, shadowHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
 
         RectF shadowRect = new RectF(
@@ -147,6 +153,7 @@ public class ShadowLayout extends FrameLayout {
         shadowPaint.setColor(fillColor);
         shadowPaint.setStyle(Paint.Style.FILL);
 
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         if (!isInEditMode()) {
             shadowPaint.setShadowLayer(shadowRadius, dx, dy, shadowColor);
         }
